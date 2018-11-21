@@ -585,10 +585,10 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
         ADQ_SetTriggerEdge(adq_cu, adq_num, setupadq.trig_mode, 0);
         ADQ_SetLvlTrigLevel(adq_cu, adq_num, 0);
 
-        setupadq.clock_source = 0;            //0 = Internal clock
-        success = ADQ_SetClockSource(adq_cu, adq_num, setupadq.clock_source);
+//        setupadq.clock_source = 0;            //0 = Internal clock
+//        success = ADQ_SetClockSource(adq_cu, adq_num, setupadq.clock_source);
 
-        setupadq.pll_divider = 2;            //在Internal clock=0时，设置，f_clk = 800MHz/divider
+//        setupadq.pll_divider = 2;            //在Internal clock=0时，设置，f_clk = 800MHz/divider
 //      success = success && ADQ214_SetPllFreqDivider(adq_cu, adq_num, setupadq.pll_divider); //ADQ14没有这函数
     }
     return success;
@@ -596,14 +596,19 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
 
 bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
 {
-    success = ADQ_DisarmTrigger(adq_cu, adq_num);
-    success = success && ADQ_StopStreaming(adq_cu, adq_num);
+//    success = ADQ_DisarmTrigger(adq_cu, adq_num);
     success = success && ADQ_SetStreamStatus(adq_cu, adq_num,setupadq.stream_ch); //ADQ14没有这个函数
-    success = success && ADQ_ArmTrigger(adq_cu, adq_num);
+//    success = success && ADQ_ArmTrigger(adq_cu, adq_num);
+    ADQ_SetStreamConfig(adq_cu, adq_num, 1, 0); //USe DRAM as giant FIFO
+    ADQ_SetStreamConfig(adq_cu, adq_num, 2, 1); //RAW mode
+    ADQ_SetStreamConfig(adq_cu, adq_num, 3,  1*1 + 2*1 + 4*1+8*1); //mask
+
+    success = success && ADQ_StopStreaming(adq_cu, adq_num);
     success = success && ADQ_StartStreaming(adq_cu, adq_num);
     if (setupadq.trig_mode == 1)	    // 如果触发模式为sofware
     {
         ADQ_SWTrig(adq_cu, adq_num);
+         qDebug() <<"trig_mode = "<<setupadq.trig_mode;
     }
 
     unsigned int samples_to_collect;
@@ -621,8 +626,8 @@ bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
 
         //ADQ214_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0&0xFF7F);   // bit[7]置0
         //ADQ214_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0|0x0080);   // bit[7]置1
-        ADQ_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0&0xFFFE);   // bit[0]置0
-        ADQ_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0|0x0001);   // bit[0]置1
+        ADQ_WriteUserRegister(adq_cu,1,2,0x30,0,write_data0&0xFFFE,nullptr);   // bit[0]置0
+        ADQ_WriteUserRegister(adq_cu,1,2,0x30,0,write_data0|0x0001,nullptr);   // bit[0]置1
 
         do
         {
@@ -631,11 +636,11 @@ bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
             qDebug()<<"success = "<<success;
         } while ((setupadq.buffers_filled == 0) && (setupadq.collect_result));
 
-//        setupadq.collect_result = ADQ214_CollectDataNextPage(adq_cu, adq_num);  //ADQ14没有这个函数
-//        qDebug() << "setupadq.collect_result = " << setupadq.collect_result;
+        setupadq.collect_result = ADQ_CollectDataNextPage(adq_cu, adq_num);  //ADQ14没有这个函数
+        qDebug() << "setupadq.collect_result = " << setupadq.collect_result;
 
-//        int samples_in_buffer = qMin(ADQ214_GetSamplesPerPage(adq_cu, adq_num), samples_to_collect); //ADQ14没有这个函数
-//        qDebug() << "samples_in_buffer = " << samples_in_buffer;
+        int samples_in_buffer = qMin(ADQ_GetSamplesPerPage(adq_cu, adq_num), samples_to_collect); //ADQ14没有这个函数
+        qDebug() << "samples_in_buffer = " << samples_in_buffer;
 
         if (ADQ_GetStreamOverflow(adq_cu, adq_num))
         {
@@ -648,10 +653,10 @@ bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
             // Buffer all data in RAM before writing to disk, if streaming to disk is need a high performance
             // procedure could be implemented here.
             // Data format is set to 16 bits, so buffer size is Samples*2 bytes
-//            memcpy((void*)&setupadq.data_stream_target[setupadq.num_samples_collect - samples_to_collect],
-//                    ADQ214_GetPtrStream(adq_cu, adq_num), samples_in_buffer* sizeof(signed short));  //ADQ14没有这个函数 GetPtrStream()
-//            samples_to_collect -= samples_in_buffer;
-//            qDebug() << " AA= "<<samples_to_collect;
+            memcpy((void*)&setupadq.data_stream_target[setupadq.num_samples_collect - samples_to_collect],
+                    ADQ_GetPtrStream(adq_cu, adq_num), samples_in_buffer* sizeof(signed short));  //ADQ14没有这个函数 GetPtrStream()
+            samples_to_collect -= samples_in_buffer;
+            qDebug() << " AA= "<<samples_to_collect;
         }
         else
         {
@@ -661,8 +666,8 @@ bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
     }
 
     success = success && ADQ_DisarmTrigger(adq_cu, adq_num);
-
-//    success = success && ADQ214_SetStreamStatus(adq_cu, adq_num,0); //ADQ14没有这个函数
+           ADQ_StopStreaming(adq_cu, adq_num);
+    success = success && ADQ_SetStreamStatus(adq_cu, adq_num,0); //ADQ14没有这个函数
     return success;
 }
 
