@@ -114,7 +114,7 @@ private:
     unsigned int ch;
     signed short* data_stream_target = nullptr;
     signed short* data_channel_target[4] ={nullptr, nullptr, nullptr, nullptr};
-    unsigned int samples_per_waveform;
+    unsigned int samples_per_waveform = 512*100;
     void connectADQDevice(void);
 
     QButtonGroup *ButtonChannel;
