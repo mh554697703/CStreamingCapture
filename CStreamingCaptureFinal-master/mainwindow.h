@@ -110,6 +110,11 @@ private:
     int num_of_devices;
     int num_of_failed;
     int num_of_ADQ14;
+    unsigned int nofchannels;
+    unsigned int ch;
+    signed short* data_stream_target = nullptr;
+    signed short* data_channel_target[4] ={nullptr, nullptr, nullptr, nullptr};
+    unsigned int samples_per_waveform;
     void connectADQDevice(void);
 
     QButtonGroup *ButtonChannel;

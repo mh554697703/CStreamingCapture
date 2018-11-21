@@ -9,7 +9,7 @@ typedef struct
     int pll_divider;
     int num_samples_collect;
     int num_sample_skip;
-    int trig_mode;
+    unsigned int trig_mode;
 
     unsigned int buffers_filled;
     unsigned int collect_result;

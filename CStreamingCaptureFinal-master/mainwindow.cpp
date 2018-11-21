@@ -31,6 +31,18 @@ MainWindow::MainWindow(QWidget *parent) :
     num_of_ADQ14 = 0;
     adq_cu = CreateADQControlUnit();
     qDebug() << "adq_cu = " << adq_cu;
+    if(ADQControlUnit_OpenDeviceInterface(adq_cu, adq_num))
+        printf("success!\n");
+      else
+      {
+        printf("failed!\n");
+      }
+//    if(ADQControlUnit_SetupDevice(adq_cu, adq_num))
+//        printf("success!\n");
+//      else
+//      {
+//        printf("failed!\n");
+//      }
     connectADQDevice();
 
     setupadq.apirev = ADQAPI_GetRevision();
@@ -122,7 +134,7 @@ void MainWindow::on_lineEdit_toFPGA_0_textChanged(const QString &arg0)          
 
 void MainWindow::on_lineEdit_toFPGA_0x_textChanged(const QString &arg0x)
 {
-    int lineEdit_toFPGA0 = arg0x.toInt(0,16);
+    int lineEdit_toFPGA0 = arg0x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_0->setText(QString::number(lineEdit_toFPGA0));
 }
 
@@ -135,7 +147,7 @@ void MainWindow::on_lineEdit_toFPGA_1_textChanged(const QString &arg1)          
 
 void MainWindow::on_lineEdit_toFPGA_1x_textChanged(const QString &arg1x)
 {
-    int lineEdit_toFPGA1 = arg1x.toInt(0,16);
+    int lineEdit_toFPGA1 = arg1x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_1->setText(QString::number(lineEdit_toFPGA1));
 }
 
@@ -147,7 +159,7 @@ void MainWindow::on_lineEdit_toFPGA_2_textChanged(const QString &arg2)          
 
 void MainWindow::on_lineEdit_toFPGA_2x_textChanged(const QString &arg2x)
 {
-    int lineEdit_toFPGA2 = arg2x.toInt(0,16);
+    int lineEdit_toFPGA2 = arg2x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_2->setText(QString::number(lineEdit_toFPGA2));
 }
 
@@ -164,7 +176,7 @@ void MainWindow::on_lineEdit_toFPGA_3_textChanged(const QString &arg3)          
 
 void MainWindow::on_lineEdit_toFPGA_3x_textChanged(const QString &arg3x)
 {
-    int lineEdit_toFPGA3 = arg3x.toInt(0,16);
+    int lineEdit_toFPGA3 = arg3x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_3->setText(QString::number(lineEdit_toFPGA3));
 }
 
@@ -195,7 +207,7 @@ void MainWindow::on_lineEdit_toFPGA_5_textChanged(const QString &arg5)          
 
 void MainWindow::on_lineEdit_toFPGA_5x_textChanged(const QString &arg5x)
 {
-    int lineEdit_toFPGA5 = arg5x.toInt(0,16);
+    int lineEdit_toFPGA5 = arg5x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_5->setText(QString::number(lineEdit_toFPGA5));
 }
 
@@ -207,7 +219,7 @@ void MainWindow::on_lineEdit_toFPGA_6_textChanged(const QString &arg6)          
 
 void MainWindow::on_lineEdit_toFPGA_6x_textChanged(const QString &arg6x)
 {
-    int lineEdit_toFPGA6 = arg6x.toInt(0,16);
+    int lineEdit_toFPGA6 = arg6x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_6->setText(QString::number(lineEdit_toFPGA6));
 }
 
@@ -232,7 +244,7 @@ void MainWindow::on_lineEdit_toFPGA_7_textChanged(const QString &arg7)          
 
 void MainWindow::on_lineEdit_toFPGA_7x_textChanged(const QString &arg7x)
 {
-    int lineEdit_toFPGA7 = arg7x.toInt(0,16);
+    int lineEdit_toFPGA7 = arg7x.toInt(nullptr,16);
     ui->lineEdit_toFPGA_7->setText(QString::number(lineEdit_toFPGA7));
 }
 
@@ -271,35 +283,35 @@ void MainWindow::on_pushButton_output_clicked()
     if(num_of_ADQ14 != 0)
     {
         write_data0 = ui->lineEdit_toFPGA_0->text().toInt();
-        int x0 = ADQ_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0);      //adq_cu：返回控制单元的指针
+        int x0 = ADQ_WriteUserRegister(adq_cu,1,2,0x30,0,write_data0,NULL);      //adq_cu：返回控制单元的指针
         qDebug() << "x0 = " << x0;
 
         write_data1 = ui->lineEdit_toFPGA_1->text().toInt();
-        int x1 = ADQ_WriteAlgoRegister(adq_cu,1,0x31,0,write_data1);      //adq_cu：返回控制单元的指针
+        int x1 = ADQ_WriteUserRegister(adq_cu,1,2,0x31,0,write_data1,NULL);      //adq_cu：返回控制单元的指针
         qDebug() << "x1 = " << x1;
 
         write_data2 = ui->lineEdit_toFPGA_2->text().toInt();
-        int x2 = ADQ_WriteAlgoRegister(adq_cu,1,0x32,0,write_data2);      //adq_cu：返回控制单元的指针
+        int x2 = ADQ_WriteUserRegister(adq_cu,1,2,0x32,0,write_data1,NULL);      //adq_cu：返回控制单元的指针
         qDebug() << "x2 = " << x2;
 
         write_data3 = ui->lineEdit_toFPGA_3->text().toInt();
-        int x3 = ADQ_WriteAlgoRegister(adq_cu,1,0x33,0,write_data3);      //adq_cu：返回控制单元的指针
+        int x3 = ADQ_WriteUserRegister(adq_cu,1,2,0x33,0,write_data1,NULL);      //adq_cu：返回控制单元的指针
         qDebug() << "x3 = " << x3;
 
         write_data4 = ui->lineEdit_toFPGA_4->text().toInt();
-        int x4 = ADQ_WriteAlgoRegister(adq_cu,1,0x34,0,write_data4);      //adq_cu：返回控制单元的指针
+        int x4 = ADQ_WriteUserRegister(adq_cu,1,2,0x34,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x4 = " << x4;
 
         write_data5 = ui->lineEdit_toFPGA_5->text().toInt();
-        int x5 = ADQ_WriteAlgoRegister(adq_cu,1,0x35,0,write_data5);      //adq_cu：返回控制单元的指针
+        int x5 = ADQ_WriteUserRegister(adq_cu,1,2,0x35,0,write_data1,NULL);     //adq_cu：返回控制单元的指针
         qDebug() << "x5 = " << x5;
 
         write_data6 = ui->lineEdit_toFPGA_6->text().toInt();
-        int x6 = ADQ_WriteAlgoRegister(adq_cu,1,0x36,0,write_data6);      //adq_cu：返回控制单元的指针
+        int x6 = ADQ_WriteUserRegister(adq_cu,1,2,0x36,0,write_data1,NULL);     //adq_cu：返回控制单元的指针
         qDebug() << "x6 = " << x6;
 
         write_data7 = ui->lineEdit_toFPGA_7->text().toInt();
-        int x7 = ADQ_WriteAlgoRegister(adq_cu,1,0x37,0,write_data7);      //adq_cu：返回控制单元的指针
+        int x7 = ADQ_WriteUserRegister(adq_cu,1,2,0x37,0,write_data1,NULL);     //adq_cu：返回控制单元的指针
         qDebug() << "x7 = " << x7;
 
     }
@@ -510,6 +522,7 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
             success = ADQ_SetTransferBuffers(adq_cu, adq_num, setupadq.num_buffers, setupadq.size_buffers);
             qDebug() << "num_buffer = " << setupadq.num_buffers;
             qDebug() << "size_buffer = " << setupadq.size_buffers;
+            ADQ_SetTestPatternMode(adq_cu,adq_num, 0);
         }
 //        qDebug() << "Default_SamplesPerPage = " << ADQ214_GetSamplesPerPage(adq_cu, adq_num); //ADQ14没有这个函数
         //        qDebug() << "Default_BufferSize = " << ADQ214_GetBufferSize(adq_cu, adq_num);
@@ -535,9 +548,16 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
             break;
         case 2:
             setupadq.stream_ch = ADQ214_STREAM_ENABLED_BOTH;
-            qDebug() << "Bo";
+            qDebug() << "Both";
             break;
         }
+        nofchannels = ADQ_GetNofChannels(adq_cu, adq_num);
+          // 为所有数据通道分配流数据的临时缓冲区
+          data_stream_target = (signed short*)malloc(samples_per_waveform*nofchannels*sizeof(signed short));
+
+          // 分配通道缓冲区以分离数据
+          for(ch = 0; ch < nofchannels; ch++)
+            data_channel_target[ch] = (signed short*)malloc(samples_per_waveform*sizeof(signed short*));
         // 设置触发方式：无触发、软件触发、外触发
 
         qDebug() << "tri_mode=" << setupadq.trig_mode;
@@ -562,12 +582,14 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
         }
             break;
         }
+        ADQ_SetTriggerEdge(adq_cu, adq_num, setupadq.trig_mode, 0);
+        ADQ_SetLvlTrigLevel(adq_cu, adq_num, 0);
 
         setupadq.clock_source = 0;            //0 = Internal clock
         success = ADQ_SetClockSource(adq_cu, adq_num, setupadq.clock_source);
 
         setupadq.pll_divider = 2;            //在Internal clock=0时，设置，f_clk = 800MHz/divider
-//        success = success && ADQ214_SetPllFreqDivider(adq_cu, adq_num, setupadq.pll_divider); //ADQ14没有这函数
+//      success = success && ADQ214_SetPllFreqDivider(adq_cu, adq_num, setupadq.pll_divider); //ADQ14没有这函数
     }
     return success;
 }
@@ -575,6 +597,7 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
 bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
 {
     success = ADQ_DisarmTrigger(adq_cu, adq_num);
+    success = success && ADQ_StopStreaming(adq_cu, adq_num);
     success = success && ADQ_SetStreamStatus(adq_cu, adq_num,setupadq.stream_ch); //ADQ14没有这个函数
     success = success && ADQ_ArmTrigger(adq_cu, adq_num);
     success = success && ADQ_StartStreaming(adq_cu, adq_num);
@@ -596,8 +619,8 @@ bool MainWindow::CaptureData2Buffer()                   // 采集数据到缓存
             ADQ_SWTrig(adq_cu, adq_num);
         }
 
-        //            ADQ214_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0&0xFF7F);   // bit[7]置0
-        //            ADQ214_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0|0x0080);   // bit[7]置1
+        //ADQ214_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0&0xFF7F);   // bit[7]置0
+        //ADQ214_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0|0x0080);   // bit[7]置1
         ADQ_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0&0xFFFE);   // bit[0]置0
         ADQ_WriteAlgoRegister(adq_cu,1,0x30,0,write_data0|0x0001);   // bit[0]置1
 
