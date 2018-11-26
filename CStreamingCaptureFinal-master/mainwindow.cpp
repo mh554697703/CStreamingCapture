@@ -31,12 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
     num_of_ADQ14 = 0;
     adq_cu = CreateADQControlUnit();
     qDebug() << "adq_cu = " << adq_cu;
-    if(ADQControlUnit_OpenDeviceInterface(adq_cu, adq_num))
-        printf("success!\n");
-      else
-      {
-        printf("failed!\n");
-      }
+//    if(ADQControlUnit_OpenDeviceInterface(adq_cu, adq_num))
+//        printf("success!\n");
+//      else
+//      {
+//        printf("failed!\n");
+//      }
 //    if(ADQControlUnit_SetupDevice(adq_cu, adq_num))
 //        printf("success!\n");
 //      else
@@ -283,19 +283,19 @@ void MainWindow::on_pushButton_output_clicked()
     if(num_of_ADQ14 != 0)
     {
         write_data0 = ui->lineEdit_toFPGA_0->text().toInt();
-        int x0 = ADQ_WriteUserRegister(adq_cu,1,2,0x30,0,write_data0,NULL);      //adq_cu：返回控制单元的指针
+        int x0 = ADQ_WriteUserRegister(adq_cu,1,2,0x30,0,write_data0,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x0 = " << x0;
 
         write_data1 = ui->lineEdit_toFPGA_1->text().toInt();
-        int x1 = ADQ_WriteUserRegister(adq_cu,1,2,0x31,0,write_data1,NULL);      //adq_cu：返回控制单元的指针
+        int x1 = ADQ_WriteUserRegister(adq_cu,1,2,0x31,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x1 = " << x1;
 
         write_data2 = ui->lineEdit_toFPGA_2->text().toInt();
-        int x2 = ADQ_WriteUserRegister(adq_cu,1,2,0x32,0,write_data1,NULL);      //adq_cu：返回控制单元的指针
+        int x2 = ADQ_WriteUserRegister(adq_cu,1,2,0x32,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x2 = " << x2;
 
         write_data3 = ui->lineEdit_toFPGA_3->text().toInt();
-        int x3 = ADQ_WriteUserRegister(adq_cu,1,2,0x33,0,write_data1,NULL);      //adq_cu：返回控制单元的指针
+        int x3 = ADQ_WriteUserRegister(adq_cu,1,2,0x33,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x3 = " << x3;
 
         write_data4 = ui->lineEdit_toFPGA_4->text().toInt();
@@ -303,15 +303,15 @@ void MainWindow::on_pushButton_output_clicked()
         qDebug() << "x4 = " << x4;
 
         write_data5 = ui->lineEdit_toFPGA_5->text().toInt();
-        int x5 = ADQ_WriteUserRegister(adq_cu,1,2,0x35,0,write_data1,NULL);     //adq_cu：返回控制单元的指针
+        int x5 = ADQ_WriteUserRegister(adq_cu,1,2,0x35,0,write_data1,nullptr);     //adq_cu：返回控制单元的指针
         qDebug() << "x5 = " << x5;
 
         write_data6 = ui->lineEdit_toFPGA_6->text().toInt();
-        int x6 = ADQ_WriteUserRegister(adq_cu,1,2,0x36,0,write_data1,NULL);     //adq_cu：返回控制单元的指针
+        int x6 = ADQ_WriteUserRegister(adq_cu,1,2,0x36,0,write_data1,nullptr);     //adq_cu：返回控制单元的指针
         qDebug() << "x6 = " << x6;
 
         write_data7 = ui->lineEdit_toFPGA_7->text().toInt();
-        int x7 = ADQ_WriteUserRegister(adq_cu,1,2,0x37,0,write_data1,NULL);     //adq_cu：返回控制单元的指针
+        int x7 = ADQ_WriteUserRegister(adq_cu,1,2,0x37,0,write_data1,nullptr);     //adq_cu：返回控制单元的指针
         qDebug() << "x7 = " << x7;
 
     }
@@ -456,8 +456,8 @@ void MainWindow::Clear_Dispaly()                   // 清除数据绘图显示
         this->drawLayoutCHB->removeWidget(p);
         delete p;
     }
-    CHA = NULL;
-    CHB = NULL;
+    CHA = nullptr;
+    CHB = nullptr;
 }
 
 //开始采集
@@ -514,9 +514,6 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
     }
     else
     {
-//        ADQ_SetDataFormat(adq_cu, adq_num, ADQ214_DATA_FORMAT_UNPACKED_16BIT);//ADQ14没有这个函数
-        // 设置TransferBuffer大小及数量
-
         if(ui->radioButton_customize->isChecked())
         {
             success = ADQ_SetTransferBuffers(adq_cu, adq_num, setupadq.num_buffers, setupadq.size_buffers);
@@ -524,10 +521,6 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
             qDebug() << "size_buffer = " << setupadq.size_buffers;
             ADQ_SetTestPatternMode(adq_cu,adq_num, 0);
         }
-//        qDebug() << "Default_SamplesPerPage = " << ADQ214_GetSamplesPerPage(adq_cu, adq_num); //ADQ14没有这个函数
-        //        qDebug() << "Default_BufferSize = " << ADQ214_GetBufferSize(adq_cu, adq_num);
-        //        qDebug() << "Default_BufferSizePages = " << ADQ214_GetBufferSizePages(adq_cu, adq_num);
-
         //设置数据简化方案
         if(ADQ_SetSampleSkip(adq_cu, adq_num, setupadq.num_sample_skip) == 0)
         {
