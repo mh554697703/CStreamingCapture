@@ -405,7 +405,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -447,7 +447,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -515,7 +515,7 @@
            </font>
           </property>
           <property name="text">
-           <string>500</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -557,7 +557,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -625,7 +625,7 @@
            </font>
           </property>
           <property name="text">
-           <string>5000</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -667,7 +667,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -735,7 +735,7 @@
            </font>
           </property>
           <property name="text">
-           <string>250</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -777,7 +777,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -845,7 +845,7 @@
            </font>
           </property>
           <property name="text">
-           <string>14</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -887,7 +887,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -955,7 +955,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -997,7 +997,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1065,7 +1065,7 @@
            </font>
           </property>
           <property name="text">
-           <string>430</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1107,7 +1107,7 @@
            </font>
           </property>
           <property name="text">
-           <string>1AE</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1175,7 +1175,7 @@
            </font>
           </property>
           <property name="text">
-           <string>4000</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1217,7 +1217,7 @@
            </font>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1292,7 +1292,7 @@
            </font>
           </property>
           <property name="text">
-           <string>67.1387</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1333,6 +1333,13 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_ReadFile">
+          <property name="text">
+           <string>读入参数</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_output">
