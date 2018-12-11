@@ -17,12 +17,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        linechart.cpp
+        linechart.cpp \
+    fpga_setting.cpp
 
 HEADERS += \
         mainwindow.h \
         linechart.h \
-    global_defines.h
+    global_defines.h \
+    fpga_setting_defines.h \
+    fpga_setting.h
 
 FORMS += \
         mainwindow.ui

@@ -10,7 +10,7 @@
 #include <QtMath>
 
 //#define SUCCESS(f) = {if(!(f)){QMessageBox::critical(this, QString::fromStdString("提示"), QString::fromStdString("Error"));}}
-bool success = true;
+static bool success = true;
 const unsigned int adq_num = 1;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -18,11 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QDir dir;
+    SettingFile = new FPGA_Setting(dir.currentPath());
+    MySetting = SettingFile->ReadSettingFile(dir.currentPath());               //读取FPGA设置文件
+    int *factor= SettingFile->ReadFactorFile(dir.currentPath());               //读取factor_fil
+    for(int i=0;i<512;i++)                                                     //取出各系数存入数组
+       MyFactor[i]=factor[i];
 
     setupadq.num_sample_skip = 128;        //设为128，省去sample_decimation
 
     ButtonClassify();                      //Group里RadioButton分类
-    //    on_radioButton_default_clicked();
     on_radioButton_customize_clicked();
     Create_statusbar();
 
@@ -31,21 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
     num_of_ADQ14 = 0;
     adq_cu = CreateADQControlUnit();
     qDebug() << "adq_cu = " << adq_cu;
-//    if(ADQControlUnit_OpenDeviceInterface(adq_cu, adq_num))
-//        printf("success!\n");
-//      else
-//      {
-//        printf("failed!\n");
-//      }
-//    if(ADQControlUnit_SetupDevice(adq_cu, adq_num))
-//        printf("success!\n");
-//      else
-//      {
-//        printf("failed!\n");
-//      }
-    connectADQDevice();
+    connectADQDevice();                                      //连接采集卡
 
-    setupadq.apirev = ADQAPI_GetRevision();
+    setupadq.apirev = ADQAPI_GetRevision();                 //获取API版本
     qDebug() << IS_VALID_DLL_REVISION(setupadq.apirev);
     qDebug() << "ADQAPI Example";
     qDebug() << "API Revision:" << setupadq.apirev;
@@ -102,6 +95,7 @@ void MainWindow::connectADQDevice()
 MainWindow::~MainWindow()
 {
     DeleteADQControlUnit(adq_cu);
+    delete SettingFile;
     delete ui;
     if (psd_res != nullptr)
         delete psd_res;
@@ -128,7 +122,7 @@ void MainWindow::on_radioButton_customize_clicked()
 //进制自动转换
 void MainWindow::on_lineEdit_toFPGA_0_textChanged(const QString &arg0)             //30
 {
-    QString lineEdit_toFPGA0x = QString::number(arg0.toInt(), 16).toUpper();
+    QString lineEdit_toFPGA0x = QString::number(arg0.toInt(), 16).toUpper();  //输入的字符串先转成16进制整形，再转回字符串，再将小写改成大写，填入对应的lineedit
     ui->lineEdit_toFPGA_0x->setText(lineEdit_toFPGA0x);
 }
 
@@ -211,7 +205,7 @@ void MainWindow::on_lineEdit_toFPGA_5x_textChanged(const QString &arg5x)
     ui->lineEdit_toFPGA_5->setText(QString::number(lineEdit_toFPGA5));
 }
 
-void MainWindow::on_lineEdit_toFPGA_6_textChanged(const QString &arg6)            //36
+void MainWindow::on_lineEdit_toFPGA_6_textChanged(const QString &arg6)             //36
 {
     QString lineEdit_toFPGA6x = QString::number(arg6.toInt(), 16).toUpper();
     ui->lineEdit_toFPGA_6x->setText(lineEdit_toFPGA6x);
@@ -282,35 +276,35 @@ void MainWindow::on_pushButton_output_clicked()
 {
     if(num_of_ADQ14 != 0)
     {
-        write_data0 = ui->lineEdit_toFPGA_0->text().toInt();
+        write_data0 = MySetting.Command;
         int x0 = ADQ_WriteUserRegister(adq_cu,1,2,0x30,0,write_data0,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x0 = " << x0;
 
-        write_data1 = ui->lineEdit_toFPGA_1->text().toInt();
+        write_data1 = MySetting.TrigLevel;
         int x1 = ADQ_WriteUserRegister(adq_cu,1,2,0x31,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x1 = " << x1;
 
-        write_data2 = ui->lineEdit_toFPGA_2->text().toInt();
+        write_data2 = MySetting.Nof_PulsesAcc;
         int x2 = ADQ_WriteUserRegister(adq_cu,1,2,0x32,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x2 = " << x2;
 
-        write_data3 = ui->lineEdit_toFPGA_3->text().toInt();
+        write_data3 = MySetting.Nof_PointsPerBin;
         int x3 = ADQ_WriteUserRegister(adq_cu,1,2,0x33,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x3 = " << x3;
 
-        write_data4 = ui->lineEdit_toFPGA_4->text().toInt();
+        write_data4 = MySetting.Nof_RangeBin;
         int x4 = ADQ_WriteUserRegister(adq_cu,1,2,0x34,0,write_data1,nullptr);      //adq_cu：返回控制单元的指针
         qDebug() << "x4 = " << x4;
 
-        write_data5 = ui->lineEdit_toFPGA_5->text().toInt();
+        write_data5 = MySetting.Overlap;
         int x5 = ADQ_WriteUserRegister(adq_cu,1,2,0x35,0,write_data1,nullptr);     //adq_cu：返回控制单元的指针
         qDebug() << "x5 = " << x5;
 
-        write_data6 = ui->lineEdit_toFPGA_6->text().toInt();
+        write_data6 = MySetting.MirrorStart;
         int x6 = ADQ_WriteUserRegister(adq_cu,1,2,0x36,0,write_data1,nullptr);     //adq_cu：返回控制单元的指针
         qDebug() << "x6 = " << x6;
 
-        write_data7 = ui->lineEdit_toFPGA_7->text().toInt();
+        write_data7 = MySetting.PointsOfProcess;
         int x7 = ADQ_WriteUserRegister(adq_cu,1,2,0x37,0,write_data1,nullptr);     //adq_cu：返回控制单元的指针
         qDebug() << "x7 = " << x7;
 
@@ -975,4 +969,16 @@ void MainWindow::on_checkBox_Overlap_clicked(bool checked)
     int UR_EndPosition = (nRangeBin-3)*nPointsPerRB + 500+ MirrorLength;     // 设置FPGA数据采样长度
     ui->lineEdit_toFPGA_7->setText(QString::number(UR_EndPosition));
 
+}
+
+void MainWindow::on_pushButton_ReadFile_clicked()
+{
+    ui->lineEdit_toFPGA_0->setText(QString::number(MySetting.Command));
+    ui->lineEdit_toFPGA_1->setText(QString::number(MySetting.TrigLevel));
+    ui->lineEdit_toFPGA_2->setText(QString::number(MySetting.Nof_PulsesAcc));
+    ui->lineEdit_toFPGA_3->setText(QString::number(MySetting.Nof_PointsPerBin));
+    ui->lineEdit_toFPGA_4->setText(QString::number(MySetting.Nof_RangeBin));
+    ui->lineEdit_toFPGA_5->setText(QString::number(MySetting.Overlap));
+    ui->lineEdit_toFPGA_6->setText(QString::number(MySetting.MirrorStart));
+    ui->lineEdit_toFPGA_7->setText(QString::number(MySetting.PointsOfProcess));
 }

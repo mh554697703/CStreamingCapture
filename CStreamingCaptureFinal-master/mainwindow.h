@@ -7,12 +7,13 @@
 #include <QButtonGroup>
 #include <QFile>
 #include <QMessageBox>
-#include <QFile>
 #include <stdio.h>
 #include <QDebug>
 #include "linechart.h"
 #include "global_defines.h"
 #include <QtWidgets/qlayout.h>
+#include "fpga_setting.h"
+#include "fpga_setting_defines.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,7 +24,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void ButtonClassify();
@@ -102,6 +103,8 @@ private slots:
 
     void on_checkBox_Overlap_clicked(bool checked);
 
+    void on_pushButton_ReadFile_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -153,6 +156,9 @@ private:
     PSD_DATA *psd_res;
     double *psd_array;
     double *losVelocity;
+    FPGA_SETTING_DEFINES MySetting;
+    int MyFactor[512]={0};
+    FPGA_Setting *SettingFile;
 };
 
 #endif // MAINWINDOW_H
