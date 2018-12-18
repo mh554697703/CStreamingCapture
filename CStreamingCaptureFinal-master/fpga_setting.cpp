@@ -9,9 +9,12 @@
 FPGA_Setting::FPGA_Setting(const QString &path)
 {
     CreatSettingFile(path);
-    CreatFactorFile(path);
 }
 
+FPGA_Setting::FPGA_Setting()
+{
+
+}
 
 void FPGA_Setting::CreatSettingFile(const QString &path)
 {
@@ -32,6 +35,7 @@ void FPGA_Setting::CreatSettingFile(const QString &path)
         setting.setValue("Overlap"             ,"0");
         setting.setValue("MirrorStart"         ,"430");
         setting.setValue("PointsOfProcess"     ,"3430");
+        setting.setValue("address"             ,"010");
         setting.endGroup();
 
         setting.beginGroup("FPGA_Setting_0x");
@@ -63,6 +67,7 @@ FPGA_SETTING_DEFINES FPGA_Setting::ReadSettingFile(const QString &path)
     FSetting.Overlap = setting.value("Overlap").toInt();
     FSetting.MirrorStart = setting.value("MirrorStart").toInt();
     FSetting.PointsOfProcess = setting.value("PointsOfProcess").toInt();
+    FSetting.address = setting.value("address").toInt();
     setting.endGroup();
 
     setting.beginGroup("FPGA_Setting_0x");
@@ -81,7 +86,7 @@ FPGA_SETTING_DEFINES FPGA_Setting::ReadSettingFile(const QString &path)
 
 void FPGA_Setting::WriteSettingFile(const FPGA_SETTING_DEFINES &CurrentSetting,const QString &path)
 {
-    QSettings setting(path,QSettings::IniFormat);
+    QSettings setting(path+"/"+"FPGA_SettingFile.ini",QSettings::IniFormat);
     setting.beginGroup("FPGA_Setting");
     setting.setValue("command",CurrentSetting.Command);
     setting.setValue("TrigLevel",CurrentSetting.TrigLevel);
@@ -91,6 +96,7 @@ void FPGA_Setting::WriteSettingFile(const FPGA_SETTING_DEFINES &CurrentSetting,c
     setting.setValue("Overlap",CurrentSetting.Overlap);
     setting.setValue("MirrorStart",CurrentSetting.MirrorStart);
     setting.setValue("PointsOfProcess",CurrentSetting.PointsOfProcess);
+    setting.setValue("address",CurrentSetting.address);
     setting.endGroup();
 
     setting.beginGroup("FPGA_Setting_0x");
@@ -103,33 +109,28 @@ void FPGA_Setting::WriteSettingFile(const FPGA_SETTING_DEFINES &CurrentSetting,c
     setting.setValue("MirrorStart_0x",CurrentSetting.MirrorStart_0x);
     setting.setValue("PointsOfProcess_0x",CurrentSetting.PointsOfProcess_0x);
     setting.endGroup();
+    qDebug()<<"Current setting has been save";
 }
 
-void FPGA_Setting::CreatFactorFile(const QString &path)        //单独创建系数设置文件
+void FPGA_Setting::CreatFactorFile(unsigned int *Hfactor)        //创建factor_file用于对比
 {
-    QFile factorFile(path+"/"+"factor_file.txt");
-    if(!factorFile.exists())                                 //如果不存在则创建
+    QDir dir;
+    QFile factorFile(dir.currentPath()+"/"+"factor_file.txt");
+    factorFile.open( QIODevice::WriteOnly | QIODevice::Truncate);
+    QTextStream data(&factorFile);
+    for(int i=0;i<512;i++)
     {
-        factorFile.open(QIODevice::WriteOnly);
-        QTextStream data(&factorFile);
-        for(int i=0;i<512;i++)
-        {
-            data<<factor[i]<<endl;
-        }
-        factorFile.close();
-        qDebug()<<"Creat factor_file successfully!";
+        data<<Hfactor[i]<<endl;
     }
-    else
-    {
-        qDebug()<<"factor_file is existing!";
-    }
+    factorFile.close();
+    qDebug()<<"Creat factor_file successfully!";
 }
 
-int *FPGA_Setting::ReadFactorFile(const QString &path)           //读取目标路径下的factor_file
+unsigned int *FPGA_Setting::ReadFactorFile( QString &path)         //读取目标路径下的factor_file
 {
     qDebug()<<"Read factor_file!!";
 
-    QFile factorFile(path+"/"+"factor_file.txt");
+    QFile factorFile(path);
     factorFile.open(QIODevice::ReadOnly);
     QTextStream data(&factorFile);
     for(int i=0;i<512;i++)

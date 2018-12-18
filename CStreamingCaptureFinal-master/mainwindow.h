@@ -101,9 +101,19 @@ private slots:
 
     void on_lineEdit_MirrorLength_textChanged(const QString &arg1);
 
+    void on_AddressEdit_0_textChanged(const QString &arg1);
+
     void on_checkBox_Overlap_clicked(bool checked);
 
+    void on_pushButton_SelectHamming_clicked();
+
+    void on_pushButton_OutputHamming_clicked();
+
     void on_pushButton_ReadFile_clicked();
+
+    void on_pushButton_WriteFile_clicked();
+
+    void on_pushButton_InputHamming_clicked();
 
 private:
 
@@ -157,8 +167,9 @@ private:
     double *psd_array;
     double *losVelocity;
     FPGA_SETTING_DEFINES MySetting;
-    int MyFactor[512]={0};
+    unsigned int MyFactor[512]={0};
     FPGA_Setting *SettingFile;
+    QString HammingFilePath;
 };
 
 #endif // MAINWINDOW_H

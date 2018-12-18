@@ -12,5 +12,6 @@ typedef struct
     int Overlap,Overlap_0x;                       //OverLap+Ur3/2
     int MirrorStart,MirrorStart_0x;               //MirrorStart
     int PointsOfProcess,PointsOfProcess_0x;       //处理结束点数
+    int address;                                 //寄存器首地址
 }FPGA_SETTING_DEFINES;
 #endif // FPGA_SETTING_DEFINES_H

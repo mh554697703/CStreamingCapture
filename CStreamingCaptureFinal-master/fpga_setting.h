@@ -7,17 +7,18 @@ class FPGA_Setting
 {
 public:
     FPGA_Setting(const QString &path);
+    FPGA_Setting();
 
     void CreatSettingFile(const QString &path);
-    void CreatFactorFile(const QString &path);
+    void CreatFactorFile(unsigned int *Hfactor);
 
     void WriteSettingFile(const FPGA_SETTING_DEFINES &CurrentSetting,const QString &path);
 
     FPGA_SETTING_DEFINES ReadSettingFile(const QString &path);
-    int *ReadFactorFile(const QString &path);
+    unsigned int *ReadFactorFile(QString &path);
 
 private:
-    int factor[512]={0};
+    unsigned int factor[512]={0};
 };
 
 #endif // FPGA_SETTING_H

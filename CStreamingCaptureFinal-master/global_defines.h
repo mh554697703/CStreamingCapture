@@ -7,8 +7,8 @@ typedef struct
     int stream_ch;
     int clock_source;                   //时钟源
     int pll_divider;
-    int num_samples_collect;
-    int num_sample_skip;
+    unsigned int num_samples_collect;
+    unsigned int num_sample_skip;
     unsigned int trig_mode;
 
     unsigned int buffers_filled;
