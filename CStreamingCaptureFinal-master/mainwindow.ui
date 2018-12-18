@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1139</width>
-    <height>692</height>
+    <width>1146</width>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,10 +20,10 @@
    <widget class="QPushButton" name="pushButton_CaptureStart">
     <property name="geometry">
      <rect>
-      <x>1000</x>
-      <y>220</y>
-      <width>93</width>
-      <height>28</height>
+      <x>1040</x>
+      <y>210</y>
+      <width>81</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -39,10 +39,10 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
-      <width>271</width>
-      <height>221</height>
+      <x>10</x>
+      <y>10</y>
+      <width>341</width>
+      <height>201</height>
      </rect>
     </property>
     <property name="font">
@@ -52,283 +52,121 @@
      </font>
     </property>
     <property name="title">
-     <string>从FPGA读入</string>
+     <string>Hamming窗</string>
     </property>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>231</width>
-       <height>163</height>
+       <x>10</x>
+       <y>20</y>
+       <width>321</width>
+       <height>171</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_SelectHamming">
+          <property name="text">
+           <string>选择文件</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
          <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
+          <property name="text">
+           <string>首地址：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLineEdit" name="HammingAddress"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_OutputHamming">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
           <property name="text">
-           <string>Ur_i0_0x20</string>
+           <string>输出到FPGA</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_0">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::NoContextMenu</enum>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_20">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>0x</string>
+           <string>数量：</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_0x">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="HammingNumber">
           <property name="text">
            <string/>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>Ur_i1_0x21</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_1">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_21">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>0x</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_1x">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="Line" name="line">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QLabel" name="label_3">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
+         <widget class="QPushButton" name="pushButton_InputHamming">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
           <property name="text">
-           <string>Ur_i2_0x22</string>
+           <string>FPGA中读入</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_2">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_22">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>0x</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_2x">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>Ur_i3_0x23</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_3">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_23">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>0x</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_fromFPGA_3x">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_18">
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_input">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>读入</string>
-          </property>
-         </widget>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>数量：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLineEdit" name="HammingNumber_2"/>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="HammingAddress_2">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>首地址：</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
@@ -338,10 +176,10 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>260</y>
-      <width>411</width>
-      <height>351</height>
+      <x>10</x>
+      <y>230</y>
+      <width>461</width>
+      <height>381</height>
      </rect>
     </property>
     <property name="font">
@@ -351,21 +189,16 @@
      </font>
     </property>
     <property name="title">
-     <string>输出到FPGA</string>
+     <string>FPGA参数</string>
     </property>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>371</width>
-       <height>295</height>
+       <x>10</x>
+       <y>23</y>
+       <width>441</width>
+       <height>351</height>
       </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-      </font>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -378,7 +211,21 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o0_0x30</string>
+           <string>Ur_o0_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_0">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -466,6 +313,8 @@
            <font>
             <family>Microsoft YaHei</family>
             <pointsize>10</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
            </font>
           </property>
           <property name="text">
@@ -473,6 +322,24 @@
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_0">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::NoContextMenu</enum>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -488,7 +355,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o1_0x31</string>
+           <string>Ur_o1_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_1">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -586,6 +470,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_1">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -598,7 +497,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o2_0x32</string>
+           <string>Ur_o2_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -696,6 +612,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -708,7 +639,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o3_0x33</string>
+           <string>Ur_o3_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_3">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -806,6 +754,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_3">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -818,7 +781,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o4_0x34</string>
+           <string>Ur_o4_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_4">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -916,6 +896,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_4">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -928,7 +923,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o5_0x35</string>
+           <string>Ur_o5_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_5">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_7">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -1026,6 +1038,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_5">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -1038,7 +1065,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o6_0x36</string>
+           <string>Ur_o6_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_6">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_8">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -1136,6 +1180,21 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_6">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -1148,7 +1207,24 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o7_0x37</string>
+           <string>Ur_o7_9'h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="AddressEdit_7">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_9">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -1246,11 +1322,26 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_fromFPGA_7">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_19">
-        <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
          <widget class="QLabel" name="label_41">
           <property name="font">
            <font>
@@ -1269,40 +1360,7 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_LevelDisp">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
+        <item row="0" column="2">
          <widget class="QLabel" name="label_42">
           <property name="font">
            <font>
@@ -1321,28 +1379,60 @@
           </property>
          </widget>
         </item>
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEdit_LevelDisp">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
-          <property name="sizeHint" stdset="0">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
            <size>
-            <width>98</width>
-            <height>17</height>
+            <width>95</width>
+            <height>16777215</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_ReadFile">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+           </font>
+          </property>
           <property name="text">
-           <string>读入参数</string>
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pushButton_ReadFile">
+          <property name="text">
+           <string>读取设置文件</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
          <widget class="QPushButton" name="pushButton_output">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <family>微软雅黑</family>
@@ -1350,9 +1440,73 @@
            </font>
           </property>
           <property name="text">
-           <string>输出</string>
+           <string>输出到FPGA</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="pushButton_input">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>90</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>FPGA中读入</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>24</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="5">
+         <widget class="QPushButton" name="pushButton_WriteFile">
+          <property name="text">
+           <string>保存当前设置</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>24</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -1362,10 +1516,10 @@
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>20</y>
-      <width>331</width>
-      <height>191</height>
+      <x>370</x>
+      <y>10</y>
+      <width>341</width>
+      <height>201</height>
      </rect>
     </property>
     <property name="font">
@@ -1380,10 +1534,10 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>291</width>
-       <height>131</height>
+       <x>10</x>
+       <y>20</y>
+       <width>321</width>
+       <height>171</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1541,7 +1695,7 @@
          <string>1024 &lt;= Bytes_in_Buffers &lt;= 32*(1024*1024)</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -1554,10 +1708,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>20</y>
-      <width>321</width>
-      <height>151</height>
+      <x>730</x>
+      <y>10</y>
+      <width>301</width>
+      <height>201</height>
      </rect>
     </property>
     <property name="font">
@@ -1575,9 +1729,9 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>8</x>
        <y>40</y>
-       <width>279</width>
+       <width>281</width>
        <height>93</height>
       </rect>
      </property>
@@ -1797,7 +1951,7 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>90</y>
+      <y>70</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -1815,7 +1969,7 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>490</x>
       <y>270</y>
       <width>641</width>
       <height>341</height>
@@ -1840,7 +1994,7 @@
         <x>0</x>
         <y>0</y>
         <width>631</width>
-        <height>311</height>
+        <height>301</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_CHA"/>
@@ -1866,10 +2020,10 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>344</x>
+      <x>490</x>
       <y>220</y>
-      <width>641</width>
-      <height>31</height>
+      <width>541</width>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1890,6 +2044,12 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_MirrorLength">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -1918,7 +2078,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_4">
+        <spacer name="horizontalSpacer_7">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -1932,6 +2092,12 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_MirrorLength_ns">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -2017,7 +2183,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1139</width>
+     <width>1146</width>
      <height>23</height>
     </rect>
    </property>
@@ -2060,7 +2226,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
