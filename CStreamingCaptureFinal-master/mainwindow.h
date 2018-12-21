@@ -111,6 +111,8 @@ private slots:
 
     void on_pushButton_ReadFile_clicked();
 
+    void on_pushButton_ADCSetting_clicked();
+
     void on_pushButton_WriteFile_clicked();
 
     void on_pushButton_InputHamming_clicked();

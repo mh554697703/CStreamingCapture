@@ -20,9 +20,9 @@
    <widget class="QPushButton" name="pushButton_CaptureStart">
     <property name="geometry">
      <rect>
-      <x>1040</x>
+      <x>930</x>
       <y>210</y>
-      <width>81</width>
+      <width>91</width>
       <height>41</height>
      </rect>
     </property>
@@ -39,8 +39,8 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>450</x>
+      <y>0</y>
       <width>341</width>
       <height>201</height>
      </rect>
@@ -142,16 +142,6 @@
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_21">
-            <property name="text">
-             <string>数量：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLineEdit" name="HammingNumber_2"/>
-          </item>
           <item row="0" column="3">
            <widget class="QLineEdit" name="HammingAddress_2">
             <property name="text">
@@ -166,6 +156,16 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>数量：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLineEdit" name="HammingNumber_2"/>
+          </item>
          </layout>
         </item>
        </layout>
@@ -177,9 +177,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>230</y>
-      <width>461</width>
-      <height>381</height>
+      <y>250</y>
+      <width>471</width>
+      <height>371</height>
      </rect>
     </property>
     <property name="font">
@@ -196,8 +196,8 @@
       <rect>
        <x>10</x>
        <y>23</y>
-       <width>441</width>
-       <height>351</height>
+       <width>451</width>
+       <height>341</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1516,8 +1516,8 @@
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>10</y>
+      <x>800</x>
+      <y>0</y>
       <width>341</width>
       <height>201</height>
      </rect>
@@ -1708,10 +1708,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>10</y>
-      <width>301</width>
-      <height>201</height>
+      <x>10</x>
+      <y>0</y>
+      <width>431</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="font">
@@ -1729,13 +1729,13 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>8</x>
-       <y>40</y>
-       <width>281</width>
-       <height>93</height>
+       <x>10</x>
+       <y>21</y>
+       <width>411</width>
+       <height>221</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_6">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_20">
         <item>
@@ -1847,28 +1847,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButton_noTrig">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>无触发</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>true</bool>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_2</string>
-          </attribute>
-         </widget>
-        </item>
-        <item>
          <widget class="QRadioButton" name="radioButton_softwareTrig">
           <property name="font">
            <font>
@@ -1891,6 +1869,25 @@
          </widget>
         </item>
         <item>
+         <widget class="QRadioButton" name="radioButton_levelTrig">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>电平触发</string>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
          <widget class="QRadioButton" name="radioButton_externalTrig">
           <property name="font">
            <font>
@@ -1903,6 +1900,28 @@
           </property>
           <property name="autoExclusive">
            <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_noTrig">
+          <property name="font">
+           <font>
+            <family>微软雅黑</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>无触发</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <property name="autoExclusive">
+           <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_2</string>
@@ -1944,6 +1963,101 @@
         </item>
        </layout>
       </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>ADC偏置</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_SetADCBias"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>ADC量程</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>实际值：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_GetADCRange"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>设定值：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_SetADCRange"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_46">
+            <property name="text">
+             <string>mV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_47">
+            <property name="text">
+             <string>mV</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_ADCSetting">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>确定</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </widget>
@@ -1951,9 +2065,9 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>70</y>
-      <width>81</width>
-      <height>31</height>
+      <y>210</y>
+      <width>91</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -1970,9 +2084,9 @@
     <property name="geometry">
      <rect>
       <x>490</x>
-      <y>270</y>
-      <width>641</width>
-      <height>341</height>
+      <y>260</y>
+      <width>651</width>
+      <height>361</height>
      </rect>
     </property>
     <property name="font">
@@ -1993,8 +2107,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>631</width>
-        <height>301</height>
+        <width>641</width>
+        <height>321</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_CHA"/>
@@ -2020,9 +2134,9 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>220</y>
-      <width>541</width>
+      <x>450</x>
+      <y>210</y>
+      <width>461</width>
       <height>41</height>
      </rect>
     </property>
@@ -2226,7 +2340,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

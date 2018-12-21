@@ -86,7 +86,7 @@ void MainWindow::on_actionSearch_triggered()          //search
 
 void MainWindow::connectADQDevice()
 {
-    num_of_devices = ADQControlUnit_FindDevices(adq_cu);			//找到所有与电脑连接的ADQ，并创建一个指针列表，返回找到设备的总数
+    num_of_devices = ADQControlUnit_FindDevices(adq_cu);		//找到所有与电脑连接的ADQ，并创建一个指针列表，返回找到设备的总数
     num_of_failed = ADQControlUnit_GetFailedDeviceCount(adq_cu);
     num_of_ADQ14 = ADQControlUnit_NofADQ14(adq_cu);				//返回找到ADQ214设备的数量
     if((num_of_failed > 0)||(num_of_devices == 0))
@@ -267,11 +267,7 @@ void MainWindow::on_pushButton_input_clicked()
         add = ui->AddressEdit_3->text().toUInt();
         read_datay3 = ADQ_ReadUserRegister(adq_cu,1,2,add,read_data);
         qDebug() << "read_datay3 = " << read_datay3;
-        ui->lineEdit_fromFPGA_3->setText(QString::number(*read_data,16));    //暂时写四个，等采集卡回来测试没问题再补上其余的
-
-        //        ui->lineEdit_fromFPGA_3->setText(QString("%1").arg(read_datay3,0,10));
-        //        ui->lineEdit_fromFPGA_3x->setText(QString("0x%1").arg(read_datay3,0,16).toUpper());
-
+        ui->lineEdit_fromFPGA_3->setText(QString::number(*read_data,16));
     }
     else
         qDebug() << "ADQ14 device unconnected";
@@ -348,6 +344,7 @@ void MainWindow::ButtonClassify()
     ButtonTrigger->addButton(ui->radioButton_noTrig, 0);
     ButtonTrigger->addButton(ui->radioButton_softwareTrig, 1);
     ButtonTrigger->addButton(ui->radioButton_externalTrig, 2);
+    ButtonTrigger->addButton(ui->radioButton_levelTrig, 3);
 
     connect(ui->radioButton_channelA, SIGNAL(clicked()), this, SLOT(onRadioChannels()));
     connect(ui->radioButton_channelB, SIGNAL(clicked()), this, SLOT(onRadioChannels()));
@@ -355,6 +352,7 @@ void MainWindow::ButtonClassify()
     connect(ui->radioButton_noTrig, SIGNAL(clicked()), this, SLOT(onRadioTrigger()));
     connect(ui->radioButton_softwareTrig, SIGNAL(clicked()), this, SLOT(onRadioTrigger()));
     connect(ui->radioButton_externalTrig, SIGNAL(clicked()), this, SLOT(onRadioTrigger()));
+    connect(ui->radioButton_levelTrig, SIGNAL(clicked()), this,SLOT(onRadioTrigger()));
 }
 
 void MainWindow::onRadioChannels()
@@ -573,27 +571,33 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
         qDebug() << "tri_mode=" << setupadq.trig_mode;
         switch(setupadq.trig_mode)
         {
-        case 0:
+        case 0:                                 //无触发
             setupadq.stream_ch &= 0x7;
             qDebug() << "no_trigger";
             break;
-        case 1:
+        case 1:                                //软件触发
         {
             ADQ_SetTriggerMode(adq_cu, adq_num,setupadq.trig_mode);
             setupadq.stream_ch |= 0x8;
             qDebug() << "soft_trigger";
         }
             break;
-        case 2:
+        case 2:                                 //外部触发
         {
             ADQ_SetTriggerMode(adq_cu, adq_num,setupadq.trig_mode);
             setupadq.stream_ch |= 0x8;
             qDebug() << "ext_trigger";
         }
             break;
+        case 3:                                 //电平触发
+        {
+            ADQ_SetTriggerMode(adq_cu,adq_num,setupadq.trig_mode);
+
+        }
         }
         ADQ_SetTriggerEdge(adq_cu, adq_num, setupadq.trig_mode, 0);
-        ADQ_SetLvlTrigLevel(adq_cu, adq_num, 0);
+        int TrigLevel=ui->lineEdit_LevelDisp->text().toInt();      //是否需要换算单位？？
+        ADQ_SetLvlTrigLevel(adq_cu, adq_num,TrigLevel);
 
         //        setupadq.clock_source = 0;            //0 = Internal clock
         //        success = ADQ_SetClockSource(adq_cu, adq_num, setupadq.clock_source);
@@ -1014,7 +1018,6 @@ void MainWindow::on_pushButton_ReadFile_clicked()           //读取FPGA设置�
 void MainWindow::on_AddressEdit_0_textChanged(const QString &arg1)  //第一个寄存器地址输入后，剩余地址自动填充
 {
     int a= arg1.toInt(nullptr,16);
-    qDebug()<<"a ="<<a<<endl;
     QString address[8];
     for(int i=0;i<8;++i)
     {
@@ -1069,22 +1072,39 @@ void MainWindow::on_pushButton_OutputHamming_clicked()      //输出hamming系�
     {
         unsigned int startAdd = ui->HammingAddress->text().toUInt();
         unsigned int num = ui->HammingNumber->text().toUInt();
-        ADQ_WriteBlockUserRegister(adq_cu,adq_num,2,startAdd,MyFactor,num*4,0);  //倒数第二个参数不确定是否正确
+        ADQ_WriteBlockUserRegister(adq_cu,adq_num,2,startAdd,MyFactor,num*4,0);
     }
     else
         qDebug() << "ADQ14 device unconnected";
 }
 
-void MainWindow::on_pushButton_InputHamming_clicked()      //从FPGA中读入hamming系数并保存到文件，用于对比
+void MainWindow::on_pushButton_InputHamming_clicked()      //从FPGA中读入hamming系数并保存到文件，用于验证
 {
     if(num_of_ADQ14)
     {
         unsigned int ReadFactor[512]={0};
         unsigned int startAdd = ui->HammingAddress_2->text().toUInt();
         unsigned int num = ui->HammingNumber_2->text().toUInt();
-        ADQ_ReadBlockUserRegister(adq_cu,adq_num,2,startAdd,ReadFactor,num*4,0); //倒数第二个参数不确定是否正确
+        ADQ_ReadBlockUserRegister(adq_cu,adq_num,2,startAdd,ReadFactor,num*4,0);
         FPGA_Setting HammingSettingFile;
         HammingSettingFile.CreatFactorFile(ReadFactor);
+    }
+    else
+        qDebug() << "ADQ14 device unconnected";
+}
+
+void MainWindow::on_pushButton_ADCSetting_clicked()        //设置ADC量程和偏置
+{
+    if(num_of_ADQ14)
+    {
+        float VppRange = ui->lineEdit_SetADCRange->text().toFloat();
+        float *rasult = nullptr;
+        int bias = ui->lineEdit_SetADCBias->text().toInt();
+
+        ADQ_SetInputRange(adq_cu,adq_num,1,VppRange,rasult);
+        ui->lineEdit_GetADCRange->setText(QString::number(double(*rasult),'g',6));//读取实际量程值返回界面
+
+        ADQ_SetAdjustableBias(adq_cu,adq_num,1,bias);
     }
     else
         qDebug() << "ADQ14 device unconnected";
