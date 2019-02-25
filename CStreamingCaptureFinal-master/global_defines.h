@@ -10,6 +10,8 @@ typedef struct
     unsigned int num_samples_collect;
     unsigned int num_sample_skip;
     unsigned int trig_mode;
+    bool isPreTrig;				        //预触发
+    unsigned int Pre_OR_HoldOff_Samples;
 
     unsigned int buffers_filled;
     unsigned int collect_result;

@@ -31,7 +31,6 @@ public:
 //Group里面RadioButton分组
 public slots:
         void onRadioChannels();
-        void onRadioTrigger();
         void update_Hex();
 
 private slots:
@@ -116,6 +115,12 @@ private slots:
     void on_pushButton_WriteFile_clicked();
 
     void on_pushButton_InputHamming_clicked();
+
+    void on_comboBox_TriggerMode_currentIndexChanged(int index);
+
+    void on_radioButton_pre_clicked();
+
+    void on_radioButton_holdOff_clicked();
 
 private:
 

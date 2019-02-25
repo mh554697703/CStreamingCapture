@@ -44,7 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
     drawLayoutCHB=ui->verticalLayout_CHB;
 
     onRadioChannels();
-    onRadioTrigger();
     update_Hex();
     setupadq.num_buffers = 256;
     setupadq.size_buffers = 1024;
@@ -340,29 +339,14 @@ void MainWindow::ButtonClassify()
     ButtonChannel->addButton(ui->radioButton_channelB, 1);
     ButtonChannel->addButton(ui->radioButton_channelBo, 2);
 
-    ButtonTrigger = new QButtonGroup(this);
-    ButtonTrigger->addButton(ui->radioButton_noTrig, 0);
-    ButtonTrigger->addButton(ui->radioButton_softwareTrig, 1);
-    ButtonTrigger->addButton(ui->radioButton_externalTrig, 2);
-    ButtonTrigger->addButton(ui->radioButton_levelTrig, 3);
-
     connect(ui->radioButton_channelA, SIGNAL(clicked()), this, SLOT(onRadioChannels()));
     connect(ui->radioButton_channelB, SIGNAL(clicked()), this, SLOT(onRadioChannels()));
     connect(ui->radioButton_channelBo, SIGNAL(clicked()), this, SLOT(onRadioChannels()));
-    connect(ui->radioButton_noTrig, SIGNAL(clicked()), this, SLOT(onRadioTrigger()));
-    connect(ui->radioButton_softwareTrig, SIGNAL(clicked()), this, SLOT(onRadioTrigger()));
-    connect(ui->radioButton_externalTrig, SIGNAL(clicked()), this, SLOT(onRadioTrigger()));
-    connect(ui->radioButton_levelTrig, SIGNAL(clicked()), this,SLOT(onRadioTrigger()));
 }
 
 void MainWindow::onRadioChannels()
 {
     setupadq.stream_ch = ButtonChannel->checkedId();
-}
-
-void MainWindow::onRadioTrigger()
-{
-    setupadq.trig_mode = ButtonTrigger->checkedId();
 }
 
 void MainWindow::on_lineEdit_BufferNum_textChanged(const QString &arg1)
@@ -566,8 +550,8 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
         // 分配通道缓冲区以分离数据
         for(ch = 0; ch < nofchannels; ch++)
             data_channel_target[ch] = (signed short*)malloc(samples_per_waveform*sizeof(signed short*));
-        // 设置触发方式：无触发、软件触发、外触发
 
+        // 设置触发方式：无触发、软件触发、外触发、电平触发
         qDebug() << "tri_mode=" << setupadq.trig_mode;
         switch(setupadq.trig_mode)
         {
@@ -576,29 +560,39 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
             qDebug() << "no_trigger";
             break;
         case 1:                                //软件触发
-        {
             ADQ_SetTriggerMode(adq_cu, adq_num,setupadq.trig_mode);
             setupadq.stream_ch |= 0x8;
             qDebug() << "soft_trigger";
-        }
+
             break;
         case 2:                                 //外部触发
-        {
             ADQ_SetTriggerMode(adq_cu, adq_num,setupadq.trig_mode);
             setupadq.stream_ch |= 0x8;
             qDebug() << "ext_trigger";
-        }
+
             break;
         case 3:                                 //电平触发
-        {
             ADQ_SetTriggerMode(adq_cu,adq_num,setupadq.trig_mode);
+            int TrigLevel=ui->lineEdit_TriggerLevel->text().toInt();      //是否需要换算单位？？
+            ADQ_SetLvlTrigLevel(adq_cu, adq_num,TrigLevel);
+            qDebug()<<"level_trigger";
 
+            break;
         }
+        //设置预触发/延迟触发
+        setupadq.Pre_OR_HoldOff_Samples = ui->lineEdit_Pre_HoldOff->text().toUInt();
+        if(setupadq.isPreTrig)
+        {
+            if(ADQ_SetPreTrigSamples(adq_cu,1,setupadq.Pre_OR_HoldOff_Samples) == 0)  // ADQ14-4C/2C: 4 samples
+                return false;
         }
+        else
+        {
+            if(ADQ_SetTriggerHoldOffSamples(adq_cu,1,setupadq.Pre_OR_HoldOff_Samples) == 0)
+                return false;
+        }
+
         ADQ_SetTriggerEdge(adq_cu, adq_num, setupadq.trig_mode, 0);
-        int TrigLevel=ui->lineEdit_LevelDisp->text().toInt();      //是否需要换算单位？？
-        ADQ_SetLvlTrigLevel(adq_cu, adq_num,TrigLevel);
-
         //        setupadq.clock_source = 0;            //0 = Internal clock
         //        success = ADQ_SetClockSource(adq_cu, adq_num, setupadq.clock_source);
 
@@ -1107,5 +1101,22 @@ void MainWindow::on_pushButton_ADCSetting_clicked()        //设置ADC量程和�
         ADQ_SetAdjustableBias(adq_cu,adq_num,1,bias);
     }
     else
-        qDebug() << "ADQ14 device unconnected";
+        qDebug()<<QString::fromLocal8Bit("采集卡未连接！！");
+}
+
+void MainWindow::on_comboBox_TriggerMode_currentIndexChanged(int index)
+{
+    setupadq.trig_mode = ui->comboBox_TriggerMode->currentIndex();
+}
+
+void MainWindow::on_radioButton_pre_clicked()
+{
+    setupadq.isPreTrig = true;
+    qDebug()<<"isPreTrigger = true!";
+}
+
+void MainWindow::on_radioButton_holdOff_clicked()
+{
+    setupadq.isPreTrig = false;
+    qDebug()<<"isPreTrigger = false!";
 }
