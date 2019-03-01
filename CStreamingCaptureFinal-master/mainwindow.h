@@ -175,6 +175,7 @@ private:
     double *losVelocity;
     FPGA_SETTING_DEFINES MySetting;
     unsigned int MyFactor[512]={0};
+//    unsigned int success = 2;
     FPGA_Setting *SettingFile;
     QString HammingFilePath;
 };

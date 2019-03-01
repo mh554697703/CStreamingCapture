@@ -244,29 +244,29 @@ void MainWindow::on_lineEdit_toFPGA_7x_textChanged(const QString &arg7x)
 
 void MainWindow::on_pushButton_input_clicked()
 {
-    if(num_of_ADQ14 != 0)            //
+    if(num_of_ADQ14 != 0)
     {
-        unsigned int *read_data = nullptr;         //用于获得FPGA读上来的数据 进行验证
+        unsigned int read_data = 0;         //用于获得FPGA读上来的数据 进行验证
 
-        unsigned int add = ui->AddressEdit_0->text().toUInt();
-        read_datay0 = ADQ_ReadUserRegister(adq_cu,1,2,add,read_data);    //return the read data
-        ui->lineEdit_fromFPGA_0->setText(QString::number(*read_data,16));
+        unsigned int add = ui->AddressEdit_0->text().toUInt(nullptr,16);
+        read_datay0 = ADQ_ReadUserRegister(adq_cu,1,2,add,&read_data);    //return the read data
+        ui->lineEdit_fromFPGA_0->setText(QString::number(read_data,16));
         qDebug() << "read_datay0 = " << read_datay0;
 
-        add = ui->AddressEdit_1->text().toUInt();
-        read_datay1 = ADQ_ReadUserRegister(adq_cu,1,2,add,read_data);
+        add = ui->AddressEdit_1->text().toUInt(nullptr,16);
+        read_datay1 = ADQ_ReadUserRegister(adq_cu,1,2,add,&read_data);
         qDebug() << "read_datay1 = " << read_datay1;
-        ui->lineEdit_fromFPGA_1->setText(QString::number(*read_data,16));
+        ui->lineEdit_fromFPGA_1->setText(QString::number(read_data,16));
 
-        add = ui->AddressEdit_2->text().toUInt();
-        read_datay2 = ADQ_ReadUserRegister(adq_cu,1,2,add,read_data);
+        add = ui->AddressEdit_2->text().toUInt(nullptr,16);
+        read_datay2 = ADQ_ReadUserRegister(adq_cu,1,2,add,&read_data);
         qDebug() << "read_datay2 = " << read_datay2;
-        ui->lineEdit_fromFPGA_2->setText(QString::number(*read_data,16));
+        ui->lineEdit_fromFPGA_2->setText(QString::number(read_data,16));
 
-        add = ui->AddressEdit_3->text().toUInt();
-        read_datay3 = ADQ_ReadUserRegister(adq_cu,1,2,add,read_data);
+        add = ui->AddressEdit_3->text().toUInt(nullptr,16);
+        read_datay3 = ADQ_ReadUserRegister(adq_cu,1,2,add,&read_data);
         qDebug() << "read_datay3 = " << read_datay3;
-        ui->lineEdit_fromFPGA_3->setText(QString::number(*read_data,16));
+        ui->lineEdit_fromFPGA_3->setText(QString::number(read_data,16));
     }
     else
         qDebug() << "ADQ14 device unconnected";
@@ -276,56 +276,56 @@ void MainWindow::on_pushButton_output_clicked()
 {
     if(num_of_ADQ14 != 0)
     {
-        unsigned int *Re_ReadData=nullptr;         //用于获得FPGA读上来的数据进行验证
+        unsigned int Re_ReadData = 0;         //用于获得FPGA读上来的数据进行验证
 
         write_data0 = MySetting.Command;
-        unsigned int add = ui->AddressEdit_0->text().toUInt();
-        qDebug()<<"add ="<<add;                                      //前面缺了0x，不知道行不行
-        int x0 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data0,Re_ReadData);      //adq_cu：返回控制单元的指针
+        unsigned int add = ui->AddressEdit_0->text().toUInt(nullptr,16);
+        int x0 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data0,&Re_ReadData);      //adq_cu：返回控制单元的指针
         qDebug() << "x0 = " << x0;
-        ui->lineEdit_fromFPGA_0->setText(QString::number(*Re_ReadData,16));  //重读的数据填入界面，用于验证
+        ui->lineEdit_fromFPGA_0->setText(QString::number(Re_ReadData,16));  //重读的数据填入界面，用于验证
 
         write_data1 = MySetting.TrigLevel;
-        add = ui->AddressEdit_1->text().toUInt();
-        int x1 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);      //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_1->text().toUInt(nullptr,16);
+        int x1 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,&Re_ReadData);      //adq_cu：返回控制单元的指针
         qDebug() << "x1 = " << x1;
-        ui->lineEdit_fromFPGA_1->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_1->setText(QString::number(Re_ReadData,16));
 
         write_data2 = MySetting.Nof_PulsesAcc;
-        add = ui->AddressEdit_2->text().toUInt();
-        int x2 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);      //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_2->text().toUInt(nullptr,16);
+        unsigned int Re_ReadData2 = 0;
+        int x2 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data2,&Re_ReadData2);      //adq_cu：返回控制单元的指针
         qDebug() << "x2 = " << x2;
-        ui->lineEdit_fromFPGA_2->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_2->setText(QString::number(Re_ReadData2,16));
 
         write_data3 = MySetting.Nof_PointsPerBin;
-        add = ui->AddressEdit_3->text().toUInt();
-        int x3 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);      //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_3->text().toUInt(nullptr,16);
+        int x3 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data3,&Re_ReadData);      //adq_cu：返回控制单元的指针
         qDebug() << "x3 = " << x3;
-        ui->lineEdit_fromFPGA_3->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_3->setText(QString::number(Re_ReadData,16));
 
         write_data4 = MySetting.Nof_RangeBin;
-        add = ui->AddressEdit_4->text().toUInt();
-        int x4 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);      //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_4->text().toUInt(nullptr,16);
+        int x4 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data4,&Re_ReadData);      //adq_cu：返回控制单元的指针
         qDebug() << "x4 = " << x4;
-        ui->lineEdit_fromFPGA_4->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_4->setText(QString::number(Re_ReadData,16));
 
         write_data5 = MySetting.Overlap;
-        add = ui->AddressEdit_5->text().toUInt();
-        int x5 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);     //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_5->text().toUInt(nullptr,16);
+        int x5 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data5,&Re_ReadData);     //adq_cu：返回控制单元的指针
         qDebug() << "x5 = " << x5;
-        ui->lineEdit_fromFPGA_5->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_5->setText(QString::number(Re_ReadData,16));
 
         write_data6 = MySetting.MirrorStart;
-        add = ui->AddressEdit_6->text().toUInt();
-        int x6 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);     //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_6->text().toUInt(nullptr,16);
+        int x6 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data6,&Re_ReadData);     //adq_cu：返回控制单元的指针
         qDebug() << "x6 = " << x6;
-        ui->lineEdit_fromFPGA_6->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_6->setText(QString::number(Re_ReadData,16));
 
         write_data7 = MySetting.PointsOfProcess;
-        add = ui->AddressEdit_7->text().toUInt();
-        int x7 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data1,Re_ReadData);     //adq_cu：返回控制单元的指针
+        add = ui->AddressEdit_7->text().toUInt(nullptr,16);
+        int x7 = ADQ_WriteUserRegister(adq_cu,1,2,add,0,write_data7,&Re_ReadData);     //adq_cu：返回控制单元的指针
         qDebug() << "x7 = " << x7;
-        ui->lineEdit_fromFPGA_7->setText(QString::number(*Re_ReadData,16));
+        ui->lineEdit_fromFPGA_7->setText(QString::number(Re_ReadData,16));
     }
     else
         qDebug() << "ADQ14 device unconnected";
@@ -593,11 +593,18 @@ bool MainWindow::Config_ADQ214()                   // 配置采集卡
         }
 
         ADQ_SetTriggerEdge(adq_cu, adq_num, setupadq.trig_mode, 0);
-        //        setupadq.clock_source = 0;            //0 = Internal clock
-        //        success = ADQ_SetClockSource(adq_cu, adq_num, setupadq.clock_source);
 
-        //        setupadq.pll_divider = 2;            //在Internal clock=0时，设置，f_clk = 800MHz/divider
-        //      success = success && ADQ214_SetPllFreqDivider(adq_cu, adq_num, setupadq.pll_divider); //ADQ14没有这函数
+
+        float VppRange = ui->lineEdit_SetADCRange->text().toFloat();
+        int bias = ui->lineEdit_SetADCBias->text().toInt();
+        if(VppRange!=0)
+        {
+            float rasult = 0;
+            success = success && ADQ_SetInputRange(adq_cu,adq_num,1,VppRange,&rasult);
+            ui->lineEdit_GetADCRange->setText(QString::number(double(rasult),'g',6));//读取实际量程值返回界面
+         }
+            success = success && ADQ_SetAdjustableBias(adq_cu,adq_num,1,bias);
+
     }
     return success;
 }
@@ -965,7 +972,6 @@ void MainWindow::on_lineEdit_MirrorLength_textChanged(const QString &arg1)
 // OverLap 是否勾选
 void MainWindow::on_checkBox_Overlap_clicked(bool checked)
 {
-
     int nPointsPerRB = ui->lineEdit_toFPGA_3->text().toInt();
     int nRangeBin = ui->lineEdit_toFPGA_4->text().toInt();
     int MirrorLength = ui->lineEdit_MirrorLength->text().toInt();
@@ -978,7 +984,6 @@ void MainWindow::on_checkBox_Overlap_clicked(bool checked)
 
         nSamples2Collect = 512*4*(nRangeBin * 2 -5);        // 设置采集点数
         ui->lineEdit_SampTotNum->setText(QString::number(nSamples2Collect));
-
     }
     else
     {
@@ -1047,7 +1052,7 @@ void MainWindow::on_pushButton_SelectHamming_clicked()       //读取选中的ha
                                                 QDir::currentPath(),"text(*.txt)",nullptr);
     if(path==nullptr)
     {
-        qDebug()<<"no file been select!!!";
+        qDebug()<<"No file has been select!!!";
     }
     else
     {
@@ -1056,7 +1061,6 @@ void MainWindow::on_pushButton_SelectHamming_clicked()       //读取选中的ha
         unsigned int *factor= HammingSettingFile.ReadFactorFile(HammingFilePath);  //读取factor_fil
         for(int i=0;i<512;i++)                                                     //取出各系数存入数组
             MyFactor[i]=factor[i];
-        qDebug()<<"MyFactor[98] ="<<MyFactor[98]<<endl; //测试用，可删掉
     }
 }
 
@@ -1064,7 +1068,7 @@ void MainWindow::on_pushButton_OutputHamming_clicked()      //输出hamming系�
 {
     if(num_of_ADQ14)
     {
-        unsigned int startAdd = ui->HammingAddress->text().toUInt();
+        unsigned int startAdd = ui->HammingAddress->text().toUInt(nullptr,16);
         unsigned int num = ui->HammingNumber->text().toUInt();
         ADQ_WriteBlockUserRegister(adq_cu,adq_num,2,startAdd,MyFactor,num*4,0);
     }
@@ -1077,7 +1081,7 @@ void MainWindow::on_pushButton_InputHamming_clicked()      //从FPGA中读入ham
     if(num_of_ADQ14)
     {
         unsigned int ReadFactor[512]={0};
-        unsigned int startAdd = ui->HammingAddress_2->text().toUInt();
+        unsigned int startAdd = ui->HammingAddress_2->text().toUInt(nullptr,16);
         unsigned int num = ui->HammingNumber_2->text().toUInt();
         ADQ_ReadBlockUserRegister(adq_cu,adq_num,2,startAdd,ReadFactor,num*4,0);
         FPGA_Setting HammingSettingFile;
@@ -1092,11 +1096,11 @@ void MainWindow::on_pushButton_ADCSetting_clicked()        //设置ADC量程和�
     if(num_of_ADQ14)
     {
         float VppRange = ui->lineEdit_SetADCRange->text().toFloat();
-        float *rasult = nullptr;
+        float rasult = 0;
         int bias = ui->lineEdit_SetADCBias->text().toInt();
 
-        ADQ_SetInputRange(adq_cu,adq_num,1,VppRange,rasult);
-        ui->lineEdit_GetADCRange->setText(QString::number(double(*rasult),'g',6));//读取实际量程值返回界面
+        ADQ_SetInputRange(adq_cu,adq_num,1,VppRange,&rasult);
+        ui->lineEdit_GetADCRange->setText(QString::number(double(rasult),'g',6));//读取实际量程值返回界面
 
         ADQ_SetAdjustableBias(adq_cu,adq_num,1,bias);
     }
@@ -1107,6 +1111,17 @@ void MainWindow::on_pushButton_ADCSetting_clicked()        //设置ADC量程和�
 void MainWindow::on_comboBox_TriggerMode_currentIndexChanged(int index)
 {
     setupadq.trig_mode = ui->comboBox_TriggerMode->currentIndex();
+    if(setupadq.trig_mode != 3)
+    {
+        ui->label_48->setEnabled(false);
+        ui->lineEdit_TriggerLevel->setEnabled(false);
+        ui->label_49->setEnabled(false);
+    }
+    else {
+        ui->label_48->setEnabled(true);
+        ui->lineEdit_TriggerLevel->setEnabled(true);
+        ui->label_49->setEnabled(true);
+    }
 }
 
 void MainWindow::on_radioButton_pre_clicked()

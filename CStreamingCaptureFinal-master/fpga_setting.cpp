@@ -41,7 +41,7 @@ void FPGA_Setting::CreatSettingFile(const QString &path)
         setting.beginGroup("FPGA_Setting_0x");
         setting.setValue("command_0x"          ,"0");
         setting.setValue("TrigLevel_0x"        ,"1F4");
-        setting.setValue("Nof_PulsesAcc_0x"     ,"1388");
+        setting.setValue("Nof_PulsesAcc_0x"    ,"1388");
         setting.setValue("Nof_PointsPerBin_0x" ,"FA");
         setting.setValue("Nof_RangeBin_0x"     ,"E");
         setting.setValue("Overlap_0x"          ,"0");
@@ -120,7 +120,8 @@ void FPGA_Setting::CreatFactorFile(unsigned int *Hfactor)        //´´½¨factor_fi
     QTextStream data(&factorFile);
     for(int i=0;i<512;i++)
     {
-        data<<Hfactor[i]<<endl;
+        data<<Hfactor[i];
+        data<<endl;
     }
     factorFile.close();
     qDebug()<<"Creat factor_file successfully!";

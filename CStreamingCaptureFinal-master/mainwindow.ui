@@ -211,7 +211,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o0_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -355,7 +355,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o1_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -497,7 +497,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o2_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -639,7 +639,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o3_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -781,7 +781,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o4_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -923,7 +923,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o5_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -1065,7 +1065,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o6_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -1207,7 +1207,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Ur_o7_9'h</string>
+           <string>9'h</string>
           </property>
          </widget>
         </item>
@@ -1726,13 +1726,13 @@
     <property name="checkable">
      <bool>false</bool>
     </property>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>21</y>
+       <x>11</x>
+       <y>22</y>
        <width>411</width>
-       <height>221</height>
+       <height>101</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -1885,16 +1885,26 @@
         </item>
         <item>
          <widget class="QLabel" name="label_48">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>触发电平：</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_TriggerLevel"/>
+         <widget class="QLineEdit" name="lineEdit_TriggerLevel">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_49">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>mV</string>
           </property>
@@ -1978,6 +1988,31 @@
         </item>
        </layout>
       </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>125</y>
+       <width>411</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="Line" name="line_10">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_15">
         <item>
@@ -2050,7 +2085,11 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_SetADCRange"/>
+           <widget class="QLineEdit" name="lineEdit_SetADCRange">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
           </item>
           <item row="0" column="2">
            <widget class="QLabel" name="label_46">
@@ -2384,7 +2423,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
